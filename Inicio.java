@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Inicio extends JFrame implements ActionListener{
-    private JTextField textfield1;
     private JLabel label1, label2, label3, label4,label5,label6,label7;
     private JButton boton1;
     public static String text="";
@@ -36,14 +35,14 @@ public class Inicio extends JFrame implements ActionListener{
         label3.setForeground(new Color(255,255,255));
         add(label3);
     
-        label4 = new JLabel("-Fernando Iturbide Amador");
-        label4.setBounds(50,242,300,30);
+        label4 = new JLabel("-Iturbide Amador Fernando");
+        label4.setBounds(50,272,300,30);
         label4.setFont(new Font("Andale Mono", 1, 14));
         label4.setForeground(new Color(255,255,255));
         add(label4);
 
         label7 = new JLabel("-Arrieta Flores Miguel Angel");
-        label7.setBounds(50,272,300,30);
+        label7.setBounds(50,242,300,30);
         label7.setFont(new Font("Andale Mono", 1, 14));
         label7.setForeground(new Color(255,255,255));
         add(label7);
@@ -66,28 +65,27 @@ public class Inicio extends JFrame implements ActionListener{
         add(boton1);
         
     
-   
+  
       }
     
     
        public void actionPerformed(ActionEvent e){
-         if(e.getSource() == boton1){
-           text=textfield1.getText().trim();
-           if (text.equals("")) {
-             JOptionPane.showMessageDialog(null, "Debes ingresar tu nombre");
+        if(e.getSource() == boton1){
+            Terminos interfaz = new Terminos();
+            interfaz.setBounds(0,0,600,360);
+            interfaz.setVisible(true);
+            interfaz.setResizable(false);
+            interfaz.setLocationRelativeTo(null);
+            this.setVisible(false);
            }else{
             
            }
          }
-       }
-    
        public static void main(String args[]){
         Inicio interfaz11 = new Inicio();
         interfaz11.setBounds(0,0,640,500);
         interfaz11.setVisible(true);
         interfaz11.setResizable(false);
         interfaz11.setLocationRelativeTo(null);
-        
-        
        }
 }
