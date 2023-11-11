@@ -73,7 +73,7 @@ public class Terminos extends JFrame implements ActionListener, ChangeListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==boton1) {
             Desarrollo desarrollo = new Desarrollo();
-            desarrollo.setBounds(0,0,600,360);
+            desarrollo.setBounds(0,0,600,400);
             desarrollo.setVisible(true);
             desarrollo.setResizable(false);
             desarrollo.setLocationRelativeTo(null);
