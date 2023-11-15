@@ -3,6 +3,7 @@ import javax.swing.event.*;
 import java.text.DecimalFormat;     
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,24 +11,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Desarrollo extends JFrame implements ActionListener, ChangeListener{
-    private JLabel label1,label3,instruccion,resultado,serie,paralelo;
+    private JLabel label1,label3,instruccion,resultado,serie1, serie2,paralelo1, paralelo2;
     private JRadioButton radio1,radio2,radio3,radio4;
-    private JButton boton1,volver,boton2,agregar;
+    private JButton boton1,volver,agregar;
     private int  contador=0,contador2=0,contador3=0;
     private JMenuBar mb;
     private JMenu menuOpciones,menuAcercaDe,menuColorFondo;
     private JMenuItem miRojo,miNegro,miMorado,Original,miElCreador,miSalir,miNuevo;
     private JScrollPane jspan;
     private JTextArea txtArea;
-    private JTextField textField,resultad;
-    double[] capacitores = new double[contador2+1];
+    private JTextField textField,resultad,prueba;
+    private Modelos modeloCombo;
+    private JComboBox combo;
+    double[] dispositivos = new double[contador2+1];
     static Metodos metodos = new Metodos();
+
     public Desarrollo (){
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         setTitle("Elección de calculo");
-        setIconImage(new ImageIcon(getClass().getResource("images/ivono.png")).getImage());
 
         mb = new JMenuBar();
         mb.setBackground(new Color(0,35,53));
@@ -100,9 +103,9 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         jspan.setVisible(false);
         add(jspan);
 
-        instruccion=new JLabel("Valor Capacitor:");
+        instruccion=new JLabel("Valor:");
         instruccion.setBounds(20,220,150,30);
-        instruccion.setFont(new Font("Andale Mono", 1, 17));
+        instruccion.setFont(new Font("Andale Mono", 1, 15));
         instruccion.setForeground(new Color(0,0,0));
         instruccion.setVisible(false);
         add(instruccion);
@@ -154,29 +157,37 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         boton1.addActionListener(this);
         add(boton1);
 
-        boton2 = new JButton("Continuar");
-        boton2.setBounds(10,280,100,30);
-        boton2.addActionListener(this);
-        boton2.setVisible(false);
-        add(boton2);
+        String rutaImagenOriginal = "R.jpg";
+        serie1=new JLabel();
+        redimensionarYEstablecerImagen(serie1, rutaImagenOriginal, 400, 150);
+        serie1.setBounds(100,5,400,150);
+        serie1.setVisible(false);
+        add(serie1);
 
-        String rutaImagenOriginal = "images/R.jpg";
-        serie=new JLabel();
-        redimensionarYEstablecerImagen(serie, rutaImagenOriginal, 400, 150);
-        serie.setBounds(100,5,400,150);
-        serie.setVisible(false);
-        add(serie);
+        String rutaImagenOriginal2 = "Parall.png";
+        paralelo1=new JLabel();
+        redimensionarYEstablecerImagen(paralelo1, rutaImagenOriginal2, 400, 150);
+        paralelo1.setBounds(100,5,400,150);
+        paralelo1.setVisible(false);
+        add(paralelo1);
 
-        String rutaImagenOriginal2 = "images/Parall.png";
-        paralelo=new JLabel();
-        redimensionarYEstablecerImagen(paralelo, rutaImagenOriginal2, 400, 150);
-        paralelo.setBounds(100,5,400,150);
-        paralelo.setVisible(false);
-        add(paralelo);
+        String rutaImagenOriginal3 = "R1.jpg";
+        serie2=new JLabel();
+        redimensionarYEstablecerImagen(serie2, rutaImagenOriginal3, 400, 150);
+        serie2.setBounds(100,5,400,150);
+        serie2.setVisible(false);
+        add(serie2);
 
-        resultado = new JLabel("Capacitancia equivalente: ");
+        String rutaImagenOriginal4 = "P1.png";
+        paralelo2=new JLabel();
+        redimensionarYEstablecerImagen(paralelo2, rutaImagenOriginal4, 400, 150);
+        paralelo2.setBounds(100,5,400,150);
+        paralelo2.setVisible(false);
+        add(paralelo2);
+
+        resultado=new JLabel("Equivalencia");
         resultado.setBounds(80,280,250,30);
-        resultado.setFont(new Font("Andale Mono", 1, 17));
+        resultado.setFont(new Font("Andale Mono", 1, 15));
         resultado.setVisible(false);
         add(resultado);
 
@@ -187,11 +198,23 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultad.setVisible(false);
         add(resultad);
 
+        modeloCombo=new Modelos();
+        combo=new JComboBox(modeloCombo);
+        combo.setBounds(330,220,50,30);
+        combo.addActionListener(this);
+        combo.setVisible(false);
+        add(combo);
+
         agregar = new JButton("Agregar");
-        agregar.setBounds(330,220,100,30);
+        agregar.setBounds(420,220,100,30);
         agregar.addActionListener(this);
         agregar.setVisible(false);
         add(agregar);
+
+        textField=new JTextField();
+        textField.setBounds(170,220,150,30);
+        textField.setVisible(false);
+        add(textField);
         
         textField=new JTextField();
         textField.setBounds(170,220,150,30);
@@ -205,7 +228,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     
     }
     public void stateChanged(ChangeEvent e) {
-        
+
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == miRojo){
@@ -214,7 +237,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         if (e.getSource() == miNegro){
             getContentPane().setBackground(new Color(0,0,0));
         }
-    	if (e.getSource() == miMorado){
+        if (e.getSource() == miMorado){
             getContentPane().setBackground(new Color(51,0,51));
         }
         if (e.getSource() == Original){
@@ -229,46 +252,81 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
             if (decision == JOptionPane.YES_OPTION) {
                 if (radio1.isSelected()==true && radio3.isSelected()==true) {
-                    
+                    instruccion.setText("Valor del Capacitor:");
+                    resultado.setText("Capacitancia equivalente:");
                     eliminar();
                     contador3=1;
-                    serie.setVisible(true);
+                    combo.setModel(modeloCombo=new Modelos(1));
+                    combo.setSelectedIndex(4);
+                    serie1.setVisible(true);
                 }
                 else if (radio1.isSelected()==true && radio4.isSelected()==true) {
+                    instruccion.setText("Valor del Capacitor:");
+                    resultado.setText("Capacitancia equivalente:");
                     eliminar();
                     contador3=0;
-                    paralelo.setVisible(true);
+                    combo.setModel(modeloCombo=new Modelos(1));
+                    combo.setSelectedIndex(4);
+                    paralelo1.setVisible(true);
                 }
                 else if (radio2.isSelected()==true && radio3.isSelected()==true) {
+                    instruccion.setText("Valor del Resistor:");
+                    resultado.setText("Resistencia equivalente:");
+                    eliminar();
+                    contador3=2;
+                    serie2.setVisible(true);
+                    combo.setModel(modeloCombo=new Modelos(2));
+                    combo.setSelectedIndex(4);
                     boton1.setForeground(new Color(0,0,255));
                 }
                 else if (radio2.isSelected()==true && radio4.isSelected()==true) {
+                    instruccion.setText("Valor del Resistor:");
+                    resultado.setText("Resistencia equivalente:");
+                    eliminar();
+                    contador3=3;
+                    paralelo2.setVisible(true);
+                    combo.setModel(modeloCombo=new Modelos(2));
+                    combo.setSelectedIndex(4);
                     boton1.setForeground(new Color(0,0,0));
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Por favor, marque las opciones","Error",JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                
+
             }
         }
+
+
         if (e.getSource() == agregar) {
             try {
-                double valorCapacitor = Double.parseDouble(textField.getText());
-        
+                ArrayList<Double> medidas=new ArrayList<>(9);
+                medidas.add(0.000001);
+                medidas.add(0.001);
+                medidas.add(0.01);
+                medidas.add(0.1);
+                medidas.add(1.0);
+                medidas.add(10.0);
+                medidas.add(100.0);
+                medidas.add(1000.0);
+                medidas.add(1000000.0);
+
+                double valorCapacitor = metodos.conversion(Double.parseDouble(textField.getText()), medidas.get(combo.getSelectedIndex()));
+
+
                 // Asegúrate de que haya suficiente espacio en el arreglo
-                if (contador2 < capacitores.length) {
-                    capacitores[contador2] = valorCapacitor;
+                if (contador2 < dispositivos.length) {
+                    dispositivos[contador2] = valorCapacitor;
                     contador2++;
                 } else {
                     // Si el arreglo está lleno, redimensiona el arreglo para agregar más elementos
-                    capacitores = Arrays.copyOf(capacitores, capacitores.length * 2);
-                    capacitores[contador2] = valorCapacitor;
+                    dispositivos = Arrays.copyOf(dispositivos, dispositivos.length * 2);
+                    dispositivos[contador2] = valorCapacitor;
                     contador2++;
                 }
-        
-                // Imprime solo los capacitores válidos en el JTextArea
-                txtArea.setText(metodos.impresionSerie(Arrays.copyOf(capacitores, contador2)));
+
+                // Imprime solo los dispositivos válidos en el JTextArea
+                txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2),1));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un valor válido para el capacitor", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -276,44 +334,40 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             contador++;
             insertar();
         }
-        
+
         if (e.getSource()==volver) {
             if (contador==0) {
-                Terminos terminos = new Terminos();
-                terminos.setBounds(0,0,600,360);
-                terminos.setVisible(true);
-                terminos.setResizable(false);
-                terminos.setLocationRelativeTo(null);
+                Desarrollo desarrollo =new Desarrollo();
+                desarrollo.setBounds(0,0,600,400);
+                desarrollo.setVisible(true);
+                desarrollo.setResizable(false);
+                desarrollo.setLocationRelativeTo(null);
                 this.setVisible(false);
             }if (contador==1) {
-                reestablecer();
+                restablecer();
             }
             if (contador>1) {
                 if (contador2 > 0) {
                     contador2--;  // Reducir el contador para indicar que se eliminará un elemento
-        
+
                     // Crear un nuevo array con un tamaño menor y copiar los valores originales
-                    double[] nuevoArray = Arrays.copyOf(capacitores, contador2);
-        
-                    // Asignar el nuevo array al array de capacitores
-                    capacitores = nuevoArray;
-        
+                    double[] nuevoArray = Arrays.copyOf(dispositivos, contador2);
+
+                    // Asignar el nuevo array al array de dispositivos
+                    dispositivos = nuevoArray;
+
                     // Actualizar la representación en el JTextArea
-                    txtArea.setText(metodos.impresionSerie(capacitores));
+                    txtArea.setText(metodos.impresion(dispositivos,1));
                     insertar();
-                    
+
                 }
                 contador--;
             }
-            
-        }
-        if (e.getSource()==boton2) {
-            
-            
+
         }
     }
     public static void main(String[] args) {
-        Desarrollo desarrollo = new Desarrollo();
+        Desarrollo desarrollo =new Desarrollo();
         desarrollo.setBounds(0,0,600,400);
         desarrollo.setVisible(true);
         desarrollo.setResizable(false);
@@ -328,6 +382,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         radio4.setVisible(false);
         boton1.setVisible(false);
         jspan.setVisible(true);
+        combo.setVisible(true);
         agregar.setVisible(true);
         textField.setVisible(true);
         instruccion.setVisible(true);
@@ -335,7 +390,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultad.setVisible(true);
         contador=0;
     }
-    public void reestablecer(){
+    public void restablecer(){
         label1.setVisible(true);
         label3.setVisible(true);
         radio1.setVisible(true);
@@ -346,27 +401,41 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         instruccion.setVisible(false);
         jspan.setVisible(false);
         agregar.setVisible(false);
+        combo.setVisible(false);
         textField.setVisible(false);
         resultado.setVisible(false);
         resultad.setVisible(false);
         txtArea.setText("");
         resultad.setText("");
         contador2 = 0;
-        capacitores = new double[contador2 + 1];
+        dispositivos = new double[contador2 + 1];
 
-        serie.setVisible(false);
-        paralelo.setVisible(false);
+        serie1.setVisible(false);
+        serie2.setVisible(false);
+        paralelo1.setVisible(false);
+        paralelo2.setVisible(false);
 
         contador=0;
     }
     public void insertar(){
-        double[] temp = Arrays.copyOf(capacitores, contador2);
-            DecimalFormat df = new DecimalFormat("#.######");
-            if (contador3==1) {
-                resultad.setText(String.valueOf(df.format(metodos.capaEnSerie(temp))));
-            }if (contador3==0) {
+        double[] temp = Arrays.copyOf(dispositivos, contador2);
+        DecimalFormat df = new DecimalFormat("#.######");
+        switch (contador3){
+            case 0:
                 resultad.setText(String.valueOf(metodos.capaEnParalelo(temp)));
-            }
+                break;
+            case 1:
+                resultad.setText(String.valueOf(df.format(metodos.capaEnSerie(temp))));
+                break;
+            case 2:
+                resultad.setText(String.valueOf(df.format(metodos.resisEnSerie(temp))));
+                break;
+            case 3:
+                resultad.setText(String.valueOf(df.format(metodos.resisEnParalelo(temp))));
+                break;
+            default:
+                System.out.println("No se puede realizar esa acción");
+        }
     }
     public void redimensionarYEstablecerImagen(JLabel label, String rutaOriginal, int ancho, int alto) {
         try {
