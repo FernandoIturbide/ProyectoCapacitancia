@@ -96,7 +96,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         txtArea=new JTextArea();
         txtArea.setEditable(false);
         jspan= new JScrollPane(txtArea);
-        jspan.setBounds(5,160,570,50);
+        jspan.setBounds(5,5,570,150);
         jspan.setVisible(false);
         add(jspan);
 
@@ -232,7 +232,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     
                     eliminar();
                     contador3=1;
-                    serie.setVisible(true);
+                    
                 }
                 else if (radio1.isSelected()==true && radio4.isSelected()==true) {
                     eliminar();
@@ -267,8 +267,8 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     contador2++;
                 }
         
-                // Imprime solo los capacitores válidos en el JTextArea
-                txtArea.setText(metodos.impresionSerie(Arrays.copyOf(capacitores, contador2)));
+            
+                txtArea.setText(metodos.generarImagenYString(capacitores));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un valor válido para el capacitor", "Error", JOptionPane.ERROR_MESSAGE);
             }
