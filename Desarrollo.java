@@ -391,6 +391,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         }
 
         if (e.getSource()==modificar){
+            modificarValor();
         }
 
         if (e.getSource()==volver) {
@@ -502,4 +503,56 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             e.printStackTrace();
         }
     }
+    private void modificarValor() {
+        if (contador2 > 0) {
+            String[] opciones = new String[contador2];
+            for (int i = 0; i < contador2; i++) {
+                opciones[i] = String.format("C%d = %.2f", i + 1, dispositivos[i]);
+            }
+
+            JComboBox<String> comboBoxModificar = new JComboBox<>(opciones);
+            JTextField nuevoValorTextField = new JTextField();
+
+            JPanel panelModificar = new JPanel();
+            panelModificar.setLayout(new GridLayout(3, 2));
+            panelModificar.add(new JLabel("Seleccione un valor:"));
+            panelModificar.add(comboBoxModificar);
+            panelModificar.add(new JLabel("Nuevo valor:"));
+            panelModificar.add(nuevoValorTextField);
+    
+            int resultado = JOptionPane.showConfirmDialog(
+                    null,
+                    panelModificar,
+                    "Modificar Valor",
+                    JOptionPane.OK_CANCEL_OPTION
+            );
+    
+            if (resultado == JOptionPane.OK_OPTION) {
+                try {
+                    
+                    int indiceSeleccionado = comboBoxModificar.getSelectedIndex();
+                    double nuevoValor = Double.parseDouble(nuevoValorTextField.getText());
+    
+                    
+                    if (indiceSeleccionado >= 0 && indiceSeleccionado < contador2) {
+                        dispositivos[indiceSeleccionado] = nuevoValor;
+    
+                        
+                        txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2), tipo));
+    
+                        
+                        insertar();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Seleccione un valor válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un valor válido para la modificación", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay valores para modificar", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
 }

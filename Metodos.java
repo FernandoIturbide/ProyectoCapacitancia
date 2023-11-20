@@ -69,4 +69,5 @@ public class Metodos{
         Double conversion=valor*multiplicador;
         return conversion;
     }
+    
 }
