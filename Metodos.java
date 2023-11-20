@@ -45,12 +45,12 @@ public class Metodos{
             accion="Capacitores";
             medida="F";
             c=String.valueOf(accion.charAt(0));
-        }
-        else {
+        } else if (opcion==2) {
             accion="Resistores";
             medida="\u2126";
             c=String.valueOf(accion.charAt(0));
         }
+
 
         StringBuilder impresion = new StringBuilder();
         impresion.append(accion+" [");

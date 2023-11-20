@@ -8,13 +8,14 @@ import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import javax.imageio.ImageIO;
 
 public class Desarrollo extends JFrame implements ActionListener, ChangeListener{
     private JLabel label1,label3,instruccion,resultado,serie1, serie2,paralelo1, paralelo2;
     private JRadioButton radio1,radio2,radio3,radio4;
-    private JButton boton1,volver,agregar;
-    private int  contador=0,contador2=0,contador3=0;
+    private JButton boton1,volver,agregar,eliminar, modificar;
+    private int  contador=0,contador2=0,contador3=0, tipo=0;
     private JMenuBar mb;
     private JMenu menuOpciones,menuAcercaDe,menuColorFondo;
     private JMenuItem miRojo,miNegro,miMorado,Original,miElCreador,miSalir,miNuevo;
@@ -206,10 +207,22 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         add(combo);
 
         agregar = new JButton("Agregar");
-        agregar.setBounds(420,220,100,30);
+        agregar.setBounds(387,220,85,30);
         agregar.addActionListener(this);
         agregar.setVisible(false);
         add(agregar);
+
+        eliminar = new JButton("Eliminar");
+        eliminar.setBounds(487,220,85,30);
+        eliminar.addActionListener(this);
+        eliminar.setVisible(false);
+        add(eliminar);
+
+        modificar = new JButton("Modificar");
+        modificar.setBounds(480,270,85,30);
+        modificar.addActionListener(this);
+        modificar.setVisible(false);
+        add(modificar);
 
         textField=new JTextField();
         textField.setBounds(170,220,150,30);
@@ -221,9 +234,10 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         textField.setVisible(false);
         add(textField);
 
-        volver = new JButton("Volver");
-        volver.setBounds(450,280,100,30);
+        volver = new JButton("\u2770");
+        volver.setBounds(5,5,40,30);
         volver.addActionListener(this);
+        volver.setVisible(false);
         add(volver);
     
     }
@@ -258,6 +272,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     contador3=1;
                     combo.setModel(modeloCombo=new Modelos(1));
                     combo.setSelectedIndex(4);
+                    tipo=1;
                     serie1.setVisible(true);
                 }
                 else if (radio1.isSelected()==true && radio4.isSelected()==true) {
@@ -267,6 +282,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     contador3=0;
                     combo.setModel(modeloCombo=new Modelos(1));
                     combo.setSelectedIndex(4);
+                    tipo=1;
                     paralelo1.setVisible(true);
                 }
                 else if (radio2.isSelected()==true && radio3.isSelected()==true) {
@@ -277,6 +293,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     serie2.setVisible(true);
                     combo.setModel(modeloCombo=new Modelos(2));
                     combo.setSelectedIndex(4);
+                    tipo=2;
                     boton1.setForeground(new Color(0,0,255));
                 }
                 else if (radio2.isSelected()==true && radio4.isSelected()==true) {
@@ -287,6 +304,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     paralelo2.setVisible(true);
                     combo.setModel(modeloCombo=new Modelos(2));
                     combo.setSelectedIndex(4);
+                    tipo=2;
                     boton1.setForeground(new Color(0,0,0));
                 }
                 else{
@@ -300,22 +318,12 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
         if (e.getSource() == agregar) {
             try {
-                ArrayList<Double> medidas=new ArrayList<>(9);
-                medidas.add(0.000001);
-                medidas.add(0.001);
-                medidas.add(0.01);
-                medidas.add(0.1);
-                medidas.add(1.0);
-                medidas.add(10.0);
-                medidas.add(100.0);
-                medidas.add(1000.0);
-                medidas.add(1000000.0);
 
-                double valorCapacitor = metodos.conversion(Double.parseDouble(textField.getText()), medidas.get(combo.getSelectedIndex()));
+                double valorCapacitor = metodos.conversion(Double.parseDouble(textField.getText()), modeloCombo.darMultiplicador(combo.getSelectedIndex()));
 
 
                 // Asegúrate de que haya suficiente espacio en el arreglo
-                if (contador2 < dispositivos.length) {
+                if (contador2 < dispositivos.length ) {
                     dispositivos[contador2] = valorCapacitor;
                     contador2++;
                 } else {
@@ -326,25 +334,31 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                 }
 
                 // Imprime solo los dispositivos válidos en el JTextArea
-                txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2),1));
+                txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2),tipo));
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Ingrese un valor válido para el capacitor", "Error", JOptionPane.ERROR_MESSAGE);
+                String nombre=null;
+                if (tipo==1){
+                    nombre="capacitor";
+                } else if (tipo==2) {
+                    nombre="resistor";
+                }
+                JOptionPane.showMessageDialog(null, "Ingrese un valor válido para el "+nombre, "Error", JOptionPane.ERROR_MESSAGE);
             }
             textField.setText("");
             contador++;
             insertar();
         }
 
-        if (e.getSource()==volver) {
-            if (contador==0) {
-                Desarrollo desarrollo =new Desarrollo();
-                desarrollo.setBounds(0,0,600,400);
-                desarrollo.setVisible(true);
-                desarrollo.setResizable(false);
-                desarrollo.setLocationRelativeTo(null);
-                this.setVisible(false);
-            }if (contador==1) {
-                restablecer();
+        if (e.getSource()==eliminar){
+            if (contador==1) {
+                txtArea.setText("");
+                resultad.setText("");
+
+                contador2 = 0;
+                dispositivos = new double[contador2 + 1];
+            }
+            if (contador<1){
+                JOptionPane.showMessageDialog(null, "Ya no se puede eliminar", "Error", JOptionPane.ERROR_MESSAGE);
             }
             if (contador>1) {
                 if (contador2 > 0) {
@@ -357,13 +371,40 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     dispositivos = nuevoArray;
 
                     // Actualizar la representación en el JTextArea
-                    txtArea.setText(metodos.impresion(dispositivos,1));
+                    txtArea.setText(metodos.impresion(dispositivos,tipo));
                     insertar();
+                }
+                if (contador2==0) {
+                    contador2--;  // Reducir el contador para indicar que se eliminará un elemento
 
+                    // Crear un nuevo array con un tamaño menor y copiar los valores originales
+                    double[] nuevoArray = null;
+
+                    // Asignar el nuevo array al array de dispositivos
+                    dispositivos = nuevoArray;
+
+                    txtArea.setText("");
+                    resultad.setText("");
                 }
                 contador--;
             }
+        }
 
+        if (e.getSource()==modificar){
+        }
+
+        if (e.getSource()==volver) {
+            if (contador==0){
+                Desarrollo desarrollo =new Desarrollo();
+                desarrollo.setBounds(0,0,600,400);
+                desarrollo.setVisible(true);
+                desarrollo.setResizable(false);
+                desarrollo.setLocationRelativeTo(null);
+                this.setVisible(false);
+            }
+            if (contador==1) {
+                restablecer();
+            }
         }
     }
     public static void main(String[] args) {
@@ -384,10 +425,13 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         jspan.setVisible(true);
         combo.setVisible(true);
         agregar.setVisible(true);
+        modificar.setVisible(true);
+        eliminar.setVisible(true);
         textField.setVisible(true);
         instruccion.setVisible(true);
         resultado.setVisible(true);
         resultad.setVisible(true);
+        volver.setVisible(true);
         contador=0;
     }
     public void restablecer(){
@@ -401,12 +445,16 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         instruccion.setVisible(false);
         jspan.setVisible(false);
         agregar.setVisible(false);
+        eliminar.setVisible(false);
+        modificar.setVisible(false);
         combo.setVisible(false);
         textField.setVisible(false);
         resultado.setVisible(false);
         resultad.setVisible(false);
         txtArea.setText("");
         resultad.setText("");
+        volver.setVisible(false);
+
         contador2 = 0;
         dispositivos = new double[contador2 + 1];
 
