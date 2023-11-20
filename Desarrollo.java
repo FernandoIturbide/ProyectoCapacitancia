@@ -24,6 +24,8 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     private JTextField textField,resultad,prueba;
     private Modelos modeloCombo;
     private JComboBox combo;
+    ButtonGroup buttonGroup = new ButtonGroup();
+    ButtonGroup buttonGroup2 = new ButtonGroup();
     double[] dispositivos = new double[contador2+1];
     static Metodos metodos = new Metodos();
 
@@ -81,7 +83,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         miNuevo = new JMenuItem("Nuevo");
         miNuevo.setFont(new Font("Andale Mono", 1, 14));
         miNuevo.setForeground(new Color(0,0,0));
-        menuOpciones.add(miNuevo);
+        
         miNuevo.addActionListener(this);
 
         miElCreador = new JMenuItem("El creador");
@@ -128,7 +130,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         radio2.setFont(new Font("Andale Mono", 1, 14));
         radio2.addChangeListener(this);
         add(radio2);
-        ButtonGroup buttonGroup = new ButtonGroup();
+        
         buttonGroup.add(radio1);
         buttonGroup.add(radio2);
         
@@ -149,7 +151,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         radio4.setFont(new Font("Andale Mono", 1, 14));
         radio4.addChangeListener(this);
         add(radio4);
-        ButtonGroup buttonGroup2 = new ButtonGroup();
+        
         buttonGroup2.add(radio3);
         buttonGroup2.add(radio4);
     
@@ -158,28 +160,28 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         boton1.addActionListener(this);
         add(boton1);
 
-        String rutaImagenOriginal = "R.jpg";
+        String rutaImagenOriginal = "images/R.jpg";
         serie1=new JLabel();
         redimensionarYEstablecerImagen(serie1, rutaImagenOriginal, 400, 150);
         serie1.setBounds(100,5,400,150);
         serie1.setVisible(false);
         add(serie1);
 
-        String rutaImagenOriginal2 = "Parall.png";
+        String rutaImagenOriginal2 = "images/Parall.png";
         paralelo1=new JLabel();
         redimensionarYEstablecerImagen(paralelo1, rutaImagenOriginal2, 400, 150);
         paralelo1.setBounds(100,5,400,150);
         paralelo1.setVisible(false);
         add(paralelo1);
 
-        String rutaImagenOriginal3 = "R1.jpg";
+        String rutaImagenOriginal3 = "images/R1.jpg";
         serie2=new JLabel();
         redimensionarYEstablecerImagen(serie2, rutaImagenOriginal3, 400, 150);
         serie2.setBounds(100,5,400,150);
         serie2.setVisible(false);
         add(serie2);
 
-        String rutaImagenOriginal4 = "P1.png";
+        String rutaImagenOriginal4 = "images/P1.png";
         paralelo2=new JLabel();
         redimensionarYEstablecerImagen(paralelo2, rutaImagenOriginal4, 400, 150);
         paralelo2.setBounds(100,5,400,150);
@@ -188,6 +190,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
         resultado=new JLabel("Equivalencia");
         resultado.setBounds(80,280,250,30);
+        resultado.setForeground(new Color(0,0,0));
         resultado.setFont(new Font("Andale Mono", 1, 15));
         resultado.setVisible(false);
         add(resultado);
@@ -219,7 +222,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         add(eliminar);
 
         modificar = new JButton("Modificar");
-        modificar.setBounds(480,270,85,30);
+        modificar.setBounds(465,280,100,30);
         modificar.addActionListener(this);
         modificar.setVisible(false);
         add(modificar);
@@ -247,18 +250,39 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == miRojo){
             getContentPane().setBackground(new Color(255,0,0));
+            colorNuevo();
+            
         }
         if (e.getSource() == miNegro){
             getContentPane().setBackground(new Color(0,0,0));
+            colorNuevo();
         }
         if (e.getSource() == miMorado){
             getContentPane().setBackground(new Color(51,0,51));
+            colorNuevo();
         }
         if (e.getSource() == Original){
             getContentPane().setBackground(new Color(238,238,238));
+            colorOriginal();
+            
         }
         if (e.getSource() == miElCreador){
-            JOptionPane.showMessageDialog(null, "Desarrollado por WAPYJ \n        www.wapyj.com");
+            JOptionPane.showMessageDialog(null, "Desarrollado por Innovate Solutions Technology \n                       www.IST.com.mx");
+        }
+
+        if (e.getSource() == miSalir){
+            Inicio interfaz11 = new Inicio();
+            interfaz11.setBounds(0,0,640,500);
+            interfaz11.setVisible(true);
+            interfaz11.setResizable(false);
+            interfaz11.setLocationRelativeTo(null);
+            this.setVisible(false);
+        }
+        if (e.getSource() == miNuevo){
+            contador2 = 0;
+            dispositivos = new double[contador2 + 1];
+            txtArea.setText("");
+            resultad.setText("");
         }
 
         if (e.getSource()==boton1) {
@@ -395,17 +419,10 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         }
 
         if (e.getSource()==volver) {
-            if (contador==0){
-                Desarrollo desarrollo =new Desarrollo();
-                desarrollo.setBounds(0,0,600,400);
-                desarrollo.setVisible(true);
-                desarrollo.setResizable(false);
-                desarrollo.setLocationRelativeTo(null);
-                this.setVisible(false);
-            }
-            if (contador==1) {
-                restablecer();
-            }
+            
+            restablecer();
+            quitarSeleccion();
+            
         }
     }
     public static void main(String[] args) {
@@ -434,6 +451,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultad.setVisible(true);
         volver.setVisible(true);
         contador=0;
+        menuOpciones.add(miNuevo);
     }
     public void restablecer(){
         label1.setVisible(true);
@@ -463,7 +481,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         serie2.setVisible(false);
         paralelo1.setVisible(false);
         paralelo2.setVisible(false);
-
+        menuOpciones.remove(miNuevo);
         contador=0;
     }
     public void insertar(){
@@ -553,6 +571,31 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             JOptionPane.showMessageDialog(null, "No hay valores para modificar", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
+    public void quitarSeleccion(){
+        buttonGroup2.clearSelection();
+        buttonGroup.clearSelection();
+    }
+    public void colorNuevo(){
+        label1.setForeground(new Color(0, 255, 0));
+            radio1.setBackground(new Color(0, 255, 0));
+            radio2.setBackground(new Color(0, 255, 0));
+            radio3.setBackground(new Color(0, 255, 0));
+            radio4.setBackground(new Color(0, 255, 0));
+            boton1.setBackground(new Color(0, 255, 255));
+            label3.setForeground(new Color(0, 255, 0));
+            resultado.setForeground(new Color(0, 255, 0));
+            instruccion.setForeground(new Color(0, 255, 0));
+    }
+    public void colorOriginal(){
+        label1.setForeground(new Color(0, 0, 0));
+            radio1.setBackground(new Color(238,238,238));
+            radio2.setBackground(new Color(238,238,238));
+            radio3.setBackground(new Color(238,238,238));
+            radio4.setBackground(new Color(238,238,238));
+            boton1.setBackground(new Color(238,238,238));
+            label3.setForeground(new Color(0, 0, 0));
+            resultado.setForeground(new Color(0, 0, 0));
+            instruccion.setForeground(new Color(0, 0, 0));
+
+    }
 }

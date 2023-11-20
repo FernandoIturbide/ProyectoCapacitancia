@@ -25,15 +25,15 @@ public class Terminos extends JFrame implements ActionListener, ChangeListener{
         textArea.setEditable(false);
         textArea.setFont(new Font("Andale Mono", 0, 9));   
         textArea.setText("\n\n          TERMINOS Y CONDICIONES" +
-                    "\n\n            A.  PROHIBIDA SU VENTA O DISTRIBUCION SIN AUTORIZACION DE LA EMPRESA WAPYJ." +
+                    "\n\n            A.  PROHIBIDA SU VENTA O DISTRIBUCION SIN AUTORIZACION DE LA EMPRESA IST." +
                     "\n            B.  PROHIBIDA LA ALTERACION DEL CODIGO FUENTE O DISEÑO DE LAS INTERFACES GRAFICAS." +
-                    "\n            C.  LA EMPRESA WAPYJ NO SE HACE RESPONSABLE DEL MAL USO DE ESTE SOFTWARE." +
+                    "\n            C.  LA EMPRESA IST NO SE HACE RESPONSABLE DEL MAL USO DE ESTE SOFTWARE." +
                     "\n\n          LOS ACUERDOS LEGALES EXPUESTOS ACONTINUACION RIGEN EL USO QUE USTED HAGA DE ESTE SOFTWARE" +
-                    "\n          (LA EMPRESA WAPYJ Y EL AUTOR FERNANDO), NO SE RESPONSABILIZAN DEL USO QUE USTED" + 
+                    "\n          (LA EMPRESA IST Y LOS AUTORES FERNANDO Y MIGUEL), NO SE RESPONSABILIZAN DEL USO QUE USTED" + 
                     "\n          HAGA CON ESTE SOFTWARE Y SUS SERVICIOS. PARA ACEPTAR ESTOS TERMINOS HAGA CLIC EN (ACEPTO)" +
                     "\n          SI USTED NO ACEPTA ESTOS TERMINOS, HAGA CLIC EN (NO ACEPTO) Y NO UTILICE ESTE SOFTWARE." + 
                     "\n\n          PARA MAYOR INFORMACION SOBRE NUESTROS PRODUCTOS O SERVICIOS, POR FAVOR VISITE" + 
-                    "\n          http://www.wapyj.com/");
+                    "\n          http://www.IST.com.mx/");
 
         scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(10,40,565,200);
