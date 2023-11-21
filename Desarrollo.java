@@ -196,7 +196,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
         resultad=new JTextField();
         resultad.setEditable(false);
-        resultad.setBounds(250,280,180,30);
+        resultad.setBounds(250,280,200,30);
         resultad.setFont(new Font("Andale Mono", 1, 17));
         resultad.setVisible(false);
         add(resultad);
@@ -377,6 +377,9 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         }
 
         if (e.getSource()==eliminar){
+            if (contador==0){
+                JOptionPane.showMessageDialog(null, "Ya no se puede eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             if (contador==1) {
                 txtArea.setText("");
                 resultad.setText("");
@@ -385,9 +388,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                 dispositivos = new double[contador2 + 1];
                 lista = new double[contador2 + 1];
                 valores=new int[contador2+1];
-            }
-            if (contador==0){
-                JOptionPane.showMessageDialog(null, "Ya no se puede eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+                contador-=1;
             }
             if (contador>1) {
                 if (contador2 > 0) {
