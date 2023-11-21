@@ -37,7 +37,8 @@ public class Metodos{
         double a=(1/capacitor_1);
         return a;
     }
-    public String impresion(double[] elementos, int opcion){
+
+    public String impresion(double[] elementos, int opcion, int[] combo){
         String accion=null;
         String medida=null;
         String c=null;
@@ -51,12 +52,13 @@ public class Metodos{
             c=String.valueOf(accion.charAt(0));
         }
 
-
+        String dispositivo=null;
         StringBuilder impresion = new StringBuilder();
         impresion.append(accion+" [");
         for (int i = 0; i < elementos.length; i++) {
             impresion.append(c+(i+1)+" = ");
-            impresion.append(elementos[i]+medida);
+            dispositivo=magnitud(elementos[i],opcion,combo[i]);
+            impresion.append(dispositivo);
             if (i < elementos.length - 1) {
                 impresion.append(" , ");
             }
@@ -65,9 +67,77 @@ public class Metodos{
         return impresion.toString();
     }
 
-    public Double conversion(double valor, double multiplicador){
+    public String conversion(double valor, int evaluacion){
+        String resultado=null;
+        if (valor<1 && evaluacion==0){
+            valor*=1000000;
+            resultado=valor+"\u00B5";
+        } else if (valor>1000){
+            valor/=1000;
+            resultado=valor+"k";
+        }else {
+            resultado= String.valueOf(valor);
+        }
+        return resultado;
+    }
+
+    public double multiplicar(double valor, double multiplicador){
         Double conversion=valor*multiplicador;
         return conversion;
     }
-    
+
+    public int evaluar(int[] valores){
+        int multiplicador=valores[0];
+        for (int numero : valores) {
+            if (numero< multiplicador){
+                multiplicador=numero;
+            }
+        }
+        return multiplicador;
+    }
+
+    public String magnitud(double valor, int tipo, int index){
+        String value=null;
+        String cantidad=null;
+        int i=index;
+        switch (i){
+            case 0:
+                cantidad=("\u00B5");
+                break;
+            case 1:
+                cantidad=("m");
+                break;
+            case 2:
+                cantidad=("c");
+                break;
+            case 3:
+                cantidad=("d");
+                break;
+            case 4:
+                cantidad=("");
+                break;
+            case 5:
+                cantidad=("da");
+                break;
+            case 6:
+                cantidad=("h");
+                break;
+            case 7:
+                cantidad=("K");
+                break;
+            case 8:
+                cantidad=("M");
+                break;
+            default:
+                cantidad=null;
+                break;
+        }
+        if (tipo==1){
+            value=cantidad+"F";
+        } else if (tipo==2) {
+            value=cantidad+"\u2126";
+        }
+        value=valor+value;
+        return value;
+    }
 }

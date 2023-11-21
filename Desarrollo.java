@@ -3,12 +3,10 @@ import javax.swing.event.*;
 import java.text.DecimalFormat;     
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import javax.imageio.ImageIO;
 
 public class Desarrollo extends JFrame implements ActionListener, ChangeListener{
@@ -24,9 +22,11 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     private JTextField textField,resultad,prueba;
     private Modelos modeloCombo;
     private JComboBox combo;
+    double[] dispositivos = new double[contador2+1];
+    double[] lista=new double[contador2+1];
+    int[] valores=new int[contador2+1];
     ButtonGroup buttonGroup = new ButtonGroup();
     ButtonGroup buttonGroup2 = new ButtonGroup();
-    double[] dispositivos = new double[contador2+1];
     static Metodos metodos = new Metodos();
 
     public Desarrollo (){
@@ -83,7 +83,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         miNuevo = new JMenuItem("Nuevo");
         miNuevo.setFont(new Font("Andale Mono", 1, 14));
         miNuevo.setForeground(new Color(0,0,0));
-        
+        menuOpciones.add(miNuevo);
         miNuevo.addActionListener(this);
 
         miElCreador = new JMenuItem("El creador");
@@ -130,7 +130,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         radio2.setFont(new Font("Andale Mono", 1, 14));
         radio2.addChangeListener(this);
         add(radio2);
-        
+        ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(radio1);
         buttonGroup.add(radio2);
         
@@ -151,7 +151,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         radio4.setFont(new Font("Andale Mono", 1, 14));
         radio4.addChangeListener(this);
         add(radio4);
-        
+        ButtonGroup buttonGroup2 = new ButtonGroup();
         buttonGroup2.add(radio3);
         buttonGroup2.add(radio4);
     
@@ -160,28 +160,28 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         boton1.addActionListener(this);
         add(boton1);
 
-        String rutaImagenOriginal = "images/R.jpg";
+        String rutaImagenOriginal = "R.jpg";
         serie1=new JLabel();
         redimensionarYEstablecerImagen(serie1, rutaImagenOriginal, 400, 150);
         serie1.setBounds(100,5,400,150);
         serie1.setVisible(false);
         add(serie1);
 
-        String rutaImagenOriginal2 = "images/Parall.png";
+        String rutaImagenOriginal2 = "Parall.png";
         paralelo1=new JLabel();
         redimensionarYEstablecerImagen(paralelo1, rutaImagenOriginal2, 400, 150);
         paralelo1.setBounds(100,5,400,150);
         paralelo1.setVisible(false);
         add(paralelo1);
 
-        String rutaImagenOriginal3 = "images/R1.jpg";
+        String rutaImagenOriginal3 = "R1.jpg";
         serie2=new JLabel();
         redimensionarYEstablecerImagen(serie2, rutaImagenOriginal3, 400, 150);
         serie2.setBounds(100,5,400,150);
         serie2.setVisible(false);
         add(serie2);
 
-        String rutaImagenOriginal4 = "images/P1.png";
+        String rutaImagenOriginal4 = "P1.png";
         paralelo2=new JLabel();
         redimensionarYEstablecerImagen(paralelo2, rutaImagenOriginal4, 400, 150);
         paralelo2.setBounds(100,5,400,150);
@@ -189,15 +189,14 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         add(paralelo2);
 
         resultado=new JLabel("Equivalencia");
-        resultado.setBounds(80,280,250,30);
-        resultado.setForeground(new Color(0,0,0));
+        resultado.setBounds(50,280,250,30);
         resultado.setFont(new Font("Andale Mono", 1, 15));
         resultado.setVisible(false);
         add(resultado);
 
         resultad=new JTextField();
         resultad.setEditable(false);
-        resultad.setBounds(290,280,130,30);
+        resultad.setBounds(250,280,180,30);
         resultad.setFont(new Font("Andale Mono", 1, 17));
         resultad.setVisible(false);
         add(resultad);
@@ -251,7 +250,6 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         if (e.getSource() == miRojo){
             getContentPane().setBackground(new Color(255,0,0));
             colorNuevo();
-            
         }
         if (e.getSource() == miNegro){
             getContentPane().setBackground(new Color(0,0,0));
@@ -264,7 +262,6 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         if (e.getSource() == Original){
             getContentPane().setBackground(new Color(238,238,238));
             colorOriginal();
-            
         }
         if (e.getSource() == miElCreador){
             JOptionPane.showMessageDialog(null, "Desarrollado por Innovate Solutions Technology \n                       www.IST.com.mx");
@@ -278,7 +275,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             interfaz11.setLocationRelativeTo(null);
             this.setVisible(false);
         }
-        if (e.getSource() == miNuevo){
+        if (e.getSource() == miNuevo) {
             contador2 = 0;
             dispositivos = new double[contador2 + 1];
             txtArea.setText("");
@@ -334,8 +331,6 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                 else{
                     JOptionPane.showMessageDialog(null,"Por favor, marque las opciones","Error",JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-
             }
         }
 
@@ -343,22 +338,30 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         if (e.getSource() == agregar) {
             try {
 
-                double valorCapacitor = metodos.conversion(Double.parseDouble(textField.getText()), modeloCombo.darMultiplicador(combo.getSelectedIndex()));
+                double valorDipositivo = Double.parseDouble(textField.getText());
+                double value=metodos.multiplicar(Double.parseDouble(textField.getText()), modeloCombo.darMultiplicador(combo.getSelectedIndex()));
+                int valor=combo.getSelectedIndex();
 
 
                 // Asegúrate de que haya suficiente espacio en el arreglo
                 if (contador2 < dispositivos.length ) {
-                    dispositivos[contador2] = valorCapacitor;
+                    dispositivos[contador2] = valorDipositivo;
+                    lista[contador2]=value;
+                    valores[contador2]=valor;
                     contador2++;
                 } else {
                     // Si el arreglo está lleno, redimensiona el arreglo para agregar más elementos
                     dispositivos = Arrays.copyOf(dispositivos, dispositivos.length * 2);
-                    dispositivos[contador2] = valorCapacitor;
+                    dispositivos[contador2] = valorDipositivo;
+                    lista = Arrays.copyOf(lista, lista.length * 2);
+                    lista[contador2]= value;
+                    valores = Arrays.copyOf(valores, valores.length * 2);
+                    valores[contador2] = valor;
                     contador2++;
                 }
 
                 // Imprime solo los dispositivos válidos en el JTextArea
-                txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2),tipo));
+                txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos,contador2),tipo,Arrays.copyOf(valores,contador2)));
             } catch (NumberFormatException ex) {
                 String nombre=null;
                 if (tipo==1){
@@ -380,8 +383,10 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
                 contador2 = 0;
                 dispositivos = new double[contador2 + 1];
+                lista = new double[contador2 + 1];
+                valores=new int[contador2+1];
             }
-            if (contador<1){
+            if (contador==0){
                 JOptionPane.showMessageDialog(null, "Ya no se puede eliminar", "Error", JOptionPane.ERROR_MESSAGE);
             }
             if (contador>1) {
@@ -395,7 +400,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                     dispositivos = nuevoArray;
 
                     // Actualizar la representación en el JTextArea
-                    txtArea.setText(metodos.impresion(dispositivos,tipo));
+                    txtArea.setText(metodos.impresion(dispositivos,tipo,valores));
                     insertar();
                 }
                 if (contador2==0) {
@@ -419,10 +424,8 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         }
 
         if (e.getSource()==volver) {
-            
             restablecer();
             quitarSeleccion();
-            
         }
     }
     public static void main(String[] args) {
@@ -451,7 +454,6 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultad.setVisible(true);
         volver.setVisible(true);
         contador=0;
-        menuOpciones.add(miNuevo);
     }
     public void restablecer(){
         label1.setVisible(true);
@@ -476,29 +478,33 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
 
         contador2 = 0;
         dispositivos = new double[contador2 + 1];
+        lista = new double[contador2 + 1];
+        valores=new int[contador2+1];
 
         serie1.setVisible(false);
         serie2.setVisible(false);
         paralelo1.setVisible(false);
         paralelo2.setVisible(false);
         menuOpciones.remove(miNuevo);
+
         contador=0;
     }
+
     public void insertar(){
-        double[] temp = Arrays.copyOf(dispositivos, contador2);
-        DecimalFormat df = new DecimalFormat("#.######");
+        double[] temp = Arrays.copyOf(lista, contador2);
+        DecimalFormat df = new DecimalFormat("#.##############");
         switch (contador3){
             case 0:
-                resultad.setText(String.valueOf(metodos.capaEnParalelo(temp)));
+                resultad.setText(metodos.conversion(Double.parseDouble(df.format(metodos.capaEnParalelo(temp))),metodos.evaluar(valores))+"F");
                 break;
             case 1:
-                resultad.setText(String.valueOf(df.format(metodos.capaEnSerie(temp))));
+                resultad.setText(metodos.conversion(Double.parseDouble(df.format(metodos.capaEnSerie(temp))),metodos.evaluar(valores))+"F");
                 break;
             case 2:
-                resultad.setText(String.valueOf(df.format(metodos.resisEnSerie(temp))));
+                resultad.setText(metodos.conversion(Double.parseDouble(df.format(metodos.resisEnSerie(temp))),metodos.evaluar(valores))+"\u2126");
                 break;
             case 3:
-                resultad.setText(String.valueOf(df.format(metodos.resisEnParalelo(temp))));
+                resultad.setText(metodos.conversion(Double.parseDouble(df.format(metodos.resisEnParalelo(temp))),metodos.evaluar(valores))+"\u2126");
                 break;
             default:
                 System.out.println("No se puede realizar esa acción");
@@ -525,10 +531,11 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         if (contador2 > 0) {
             String[] opciones = new String[contador2];
             for (int i = 0; i < contador2; i++) {
-                opciones[i] = String.format("C%d = %.2f", i + 1, dispositivos[i]);
+                opciones[i] = String.format("C%d = %.2f %s", i + 1, dispositivos[i],modeloCombo.getElementAt(valores[i]));
             }
 
             JComboBox<String> comboBoxModificar = new JComboBox<>(opciones);
+            JComboBox opcion=new JComboBox(modeloCombo=new Modelos(tipo));
             JTextField nuevoValorTextField = new JTextField();
 
             JPanel panelModificar = new JPanel();
@@ -537,28 +544,31 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             panelModificar.add(comboBoxModificar);
             panelModificar.add(new JLabel("Nuevo valor:"));
             panelModificar.add(nuevoValorTextField);
-    
+            panelModificar.add(opcion);
+            opcion.setSelectedIndex(4);
+
             int resultado = JOptionPane.showConfirmDialog(
                     null,
                     panelModificar,
                     "Modificar Valor",
                     JOptionPane.OK_CANCEL_OPTION
             );
-    
+
             if (resultado == JOptionPane.OK_OPTION) {
                 try {
-                    
+
                     int indiceSeleccionado = comboBoxModificar.getSelectedIndex();
                     double nuevoValor = Double.parseDouble(nuevoValorTextField.getText());
-    
-                    
+                    double nuevo=metodos.multiplicar(Double.parseDouble(nuevoValorTextField.getText()),modeloCombo.darMultiplicador(opcion.getSelectedIndex()));
+                    int newValue=opcion.getSelectedIndex();
+
                     if (indiceSeleccionado >= 0 && indiceSeleccionado < contador2) {
                         dispositivos[indiceSeleccionado] = nuevoValor;
-    
-                        
-                        txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos, contador2), tipo));
-    
-                        
+                        lista[indiceSeleccionado]=nuevo;
+                        valores[indiceSeleccionado]=newValue;
+
+                        txtArea.setText(metodos.impresion(Arrays.copyOf(dispositivos,contador2),tipo,Arrays.copyOf(valores,contador2)));
+
                         insertar();
                     } else {
                         JOptionPane.showMessageDialog(null, "Seleccione un valor válido", "Error", JOptionPane.ERROR_MESSAGE);
@@ -577,25 +587,25 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     }
     public void colorNuevo(){
         label1.setForeground(new Color(0, 255, 0));
-            radio1.setBackground(new Color(0, 255, 0));
-            radio2.setBackground(new Color(0, 255, 0));
-            radio3.setBackground(new Color(0, 255, 0));
-            radio4.setBackground(new Color(0, 255, 0));
-            boton1.setBackground(new Color(0, 255, 255));
-            label3.setForeground(new Color(0, 255, 0));
-            resultado.setForeground(new Color(0, 255, 0));
-            instruccion.setForeground(new Color(0, 255, 0));
+        radio1.setBackground(new Color(0, 255, 0));
+        radio2.setBackground(new Color(0, 255, 0));
+        radio3.setBackground(new Color(0, 255, 0));
+        radio4.setBackground(new Color(0, 255, 0));
+        boton1.setBackground(new Color(0, 255, 255));
+        label3.setForeground(new Color(0, 255, 0));
+        resultado.setForeground(new Color(0, 255, 0));
+        instruccion.setForeground(new Color(0, 255, 0));
     }
     public void colorOriginal(){
         label1.setForeground(new Color(0, 0, 0));
-            radio1.setBackground(new Color(238,238,238));
-            radio2.setBackground(new Color(238,238,238));
-            radio3.setBackground(new Color(238,238,238));
-            radio4.setBackground(new Color(238,238,238));
-            boton1.setBackground(new Color(238,238,238));
-            label3.setForeground(new Color(0, 0, 0));
-            resultado.setForeground(new Color(0, 0, 0));
-            instruccion.setForeground(new Color(0, 0, 0));
+        radio1.setBackground(new Color(238,238,238));
+        radio2.setBackground(new Color(238,238,238));
+        radio3.setBackground(new Color(238,238,238));
+        radio4.setBackground(new Color(238,238,238));
+        boton1.setBackground(new Color(238,238,238));
+        label3.setForeground(new Color(0, 0, 0));
+        resultado.setForeground(new Color(0, 0, 0));
+        instruccion.setForeground(new Color(0, 0, 0));
 
     }
 }
