@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Inicio extends JFrame implements ActionListener{
-    private JLabel label1, label2, label3, label4,label5,label6,label7;
+    private JLabel label1, label2, label3, label4,label5,label6,label7, img;
     private JButton boton1;
     public static String text="";
         Date fechaActual = new Date();
@@ -15,18 +15,15 @@ public class Inicio extends JFrame implements ActionListener{
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Bienvenido");
-        getContentPane().setBackground(new Color(0,35,53));
+        getContentPane().setBackground(new Color(255,255,255));
         setIconImage(new ImageIcon(getClass().getResource("images/ivono.png")).getImage());
+
         
-        ImageIcon imagen = new ImageIcon("images/Fes.png");
-        label1 = new JLabel(imagen);
-        label1.setBounds(380,15,340,100);
-        add(label1);
     
         label2 = new JLabel(timeActual);
-        label2.setBounds(480,400,300,30);
+        label2.setBounds(460,320,300,30);
         label2.setFont(new Font("Andale Mono", 3, 18));
-        label2.setForeground(new Color(253,12,3));
+        label2.setForeground(new Color(255,255,255));
         add(label2);
     
         label3 = new JLabel("Socios: ");
@@ -48,23 +45,35 @@ public class Inicio extends JFrame implements ActionListener{
         add(label7);
 
         label5=new JLabel("Calculadora de capacitancia");
-        label5.setBounds(150,60,340,30);
+        label5.setBounds(150,100,340,30);
         label5.setFont(new Font("Andale Mono", 3, 24));
-        label5.setForeground(new Color(251,235,0));
+        label5.setForeground(new Color(255,255,255));
         add(label5);
 
         label6=new JLabel("y resistencia equivalente");
-        label6.setBounds(170,90,300,30);
+        label6.setBounds(170,130,300,30);
         label6.setFont(new Font("Andale Mono", 3, 24));
-        label6.setForeground(new Color(251,235,0));
+        label6.setForeground(new Color(255,255,255));
         add(label6);
 
         boton1=new JButton("Continuar");
-        boton1.setBounds(260, 360, 120, 40);
+        boton1.setBounds(260, 370, 120, 40);
         boton1.addActionListener(this);
         add(boton1);
+
+        ImageIcon imagen = new ImageIcon("images/Fes.png");
+        label1 = new JLabel(imagen);
+        label1.setBounds(380,15,340,100);
+        add(label1);
         
-    
+        ImageIcon image = new ImageIcon("images/R (1).jpg");
+        img = new JLabel(image);
+        img.setBounds(0,0,640,500);
+        add(img);
+
+        
+        
+        
   
       }
     
@@ -77,9 +86,8 @@ public class Inicio extends JFrame implements ActionListener{
             interfaz.setResizable(false);
             interfaz.setLocationRelativeTo(null);
             this.setVisible(false);
-           }else{
-            
            }
+           this.setVisible(false);
          }
        public static void main(String args[]){
         Inicio interfaz11 = new Inicio();
