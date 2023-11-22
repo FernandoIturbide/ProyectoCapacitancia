@@ -32,6 +32,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     public Desarrollo (){
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon("logoF.jpg").getImage());
         
         setTitle("Elección de calculo");
 

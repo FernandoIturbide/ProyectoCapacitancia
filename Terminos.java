@@ -11,6 +11,7 @@ public class Terminos extends JFrame implements ActionListener, ChangeListener{
     public Terminos (){
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon("logoF.jpg").getImage());
         
         setTitle("Licencia de uso");
         setIconImage(new ImageIcon(getClass().getResource("images/ivono.png")).getImage());
