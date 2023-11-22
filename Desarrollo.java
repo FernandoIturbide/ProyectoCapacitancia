@@ -13,10 +13,10 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
     private JLabel label1,label3,instruccion,resultado,serie1, serie2,paralelo1, paralelo2, img;
     private JRadioButton radio1,radio2,radio3,radio4;
     private JButton boton1,volver,agregar,eliminar, modificar;
-    private int  contador=0,contador2=0,contador3=0, tipo=0;
+    private int  contador=0,contador2=0,contador3=0, tipo=0,contador4=0,contador5=0;
     private JMenuBar mb;
     private JMenu menuOpciones,menuAcercaDe,menuColorFondo;
-    private JMenuItem miRojo,miNegro,miMorado,Original,miElCreador,miSalir,miNuevo;
+    private JMenuItem miRojo,miNegro,miMorado,Original,miElCreador,miSalir,miNuevo,miDefecto;
     private JScrollPane jspan;
     private JTextArea txtArea;
     private JTextField textField,resultad,prueba;
@@ -79,6 +79,12 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         miMorado.setForeground(new Color(0,0,0));
         menuColorFondo.add(miMorado);
         miMorado.addActionListener(this);
+
+        miDefecto=new JMenuItem("Blanco");
+        miDefecto.setFont(new Font("Andale Mono", 1, 14));
+        miDefecto.setForeground(new Color(0,0,0));
+        menuColorFondo.add(miDefecto);
+        miDefecto.addActionListener(this);
 
         miNuevo = new JMenuItem("Nuevo");
         miNuevo.setFont(new Font("Andale Mono", 1, 14));
@@ -160,28 +166,28 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         boton1.addActionListener(this);
         add(boton1);
 
-        String rutaImagenOriginal = "R.jpg";
+        String rutaImagenOriginal = "images/R.jpg";
         serie1=new JLabel();
         redimensionarYEstablecerImagen(serie1, rutaImagenOriginal, 400, 150);
         serie1.setBounds(100,5,400,150);
         serie1.setVisible(false);
         add(serie1);
 
-        String rutaImagenOriginal2 = "Parall.png";
+        String rutaImagenOriginal2 = "images/Parall.png";
         paralelo1=new JLabel();
         redimensionarYEstablecerImagen(paralelo1, rutaImagenOriginal2, 400, 150);
         paralelo1.setBounds(100,5,400,150);
         paralelo1.setVisible(false);
         add(paralelo1);
 
-        String rutaImagenOriginal3 = "R1.jpg";
+        String rutaImagenOriginal3 = "images/R1.jpg";
         serie2=new JLabel();
         redimensionarYEstablecerImagen(serie2, rutaImagenOriginal3, 400, 150);
         serie2.setBounds(100,5,400,150);
         serie2.setVisible(false);
         add(serie2);
 
-        String rutaImagenOriginal4 = "P1.png";
+        String rutaImagenOriginal4 = "images/P1.png";
         paralelo2=new JLabel();
         redimensionarYEstablecerImagen(paralelo2, rutaImagenOriginal4, 400, 150);
         paralelo2.setBounds(100,5,400,150);
@@ -243,7 +249,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         volver.setVisible(false);
         add(volver);
 
-        String rutaFondo="nuevo4.jpg";
+        String rutaFondo="images/nuevo4.jpg";
         img = new JLabel();
         redimensionarYEstablecerImagen(img,rutaFondo,640,500);
         img.setBounds(0,0,640,500);
@@ -267,6 +273,35 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
             colorNuevo();
         }
         if (e.getSource() == Original){
+            if (contador5==0) {
+                String rutaFondo2="images/nuevo4.jpg";
+                redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
+                label3.setForeground(new Color(255, 255, 255));
+                label1.setForeground(new Color(255, 255, 255));
+                radio1.setBackground(new Color(238,238,238));
+                radio2.setBackground(new Color(238,238,238));
+                radio3.setBackground(new Color(238,238,238));
+                radio4.setBackground(new Color(238,238,238));
+                boton1.setBackground(new Color(238,238,238));
+                instruccion.setForeground(new Color(0, 0, 0));
+                resultado.setForeground(new Color(0, 0, 0));
+            }else{
+                String rutaFondo2="images/nuevo1.jpg";
+                redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
+                instruccion.setForeground(new Color(0, 0, 0));
+                resultado.setForeground(new Color(0, 0, 0));
+                label3.setForeground(new Color(255, 255, 255));
+                label1.setForeground(new Color(255, 255, 255));
+                radio1.setBackground(new Color(238,238,238));
+                radio2.setBackground(new Color(238,238,238));
+                radio3.setBackground(new Color(238,238,238));
+                radio4.setBackground(new Color(238,238,238));
+                boton1.setBackground(new Color(238,238,238));
+            }
+            
+                contador4=0;
+        }
+        if (e.getSource() == miDefecto) {
             getContentPane().setBackground(new Color(238,238,238));
             colorOriginal();
         }
@@ -338,11 +373,16 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                 else{
                     JOptionPane.showMessageDialog(null,"Por favor, marque las opciones","Error",JOptionPane.ERROR_MESSAGE);
                 }
-                String rutaFondo2="nuevo1.jpg";
+                if (contador4==0) {
+                    String rutaFondo2="images/nuevo1.jpg";
                 redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
+                }
+                
             }
+            
         }
 
+        quitarSeleccion();
 
         if (e.getSource() == agregar) {
             try {
@@ -463,6 +503,8 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultado.setVisible(true);
         resultad.setVisible(true);
         volver.setVisible(true);
+        contador5=1;
+        
         contador=0;
     }
     public void restablecer(){
@@ -486,13 +528,17 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultad.setText("");
         volver.setVisible(false);
 
+        contador5=0;
         contador2 = 0;
         dispositivos = new double[contador2 + 1];
         lista = new double[contador2 + 1];
         valores=new int[contador2+1];
 
-        String rutaFondo2="nuevo4.jpg";
+        if (contador4==0) {
+            String rutaFondo2="images/nuevo4.jpg";
         redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
+        }
+        
 
         serie1.setVisible(false);
         serie2.setVisible(false);
@@ -608,17 +654,21 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         label3.setForeground(new Color(0, 255, 0));
         resultado.setForeground(new Color(0, 255, 0));
         instruccion.setForeground(new Color(0, 255, 0));
+        img.setIcon(null);
+        contador4=1;
     }
     public void colorOriginal(){
-        label1.setForeground(new Color(255, 255, 255));
+        label1.setForeground(new Color(0,0,0));
         radio1.setBackground(new Color(238,238,238));
         radio2.setBackground(new Color(238,238,238));
         radio3.setBackground(new Color(238,238,238));
         radio4.setBackground(new Color(238,238,238));
         boton1.setBackground(new Color(238,238,238));
-        label3.setForeground(new Color(255, 255, 255));
+        label3.setForeground(new Color(0,0,0));
         resultado.setForeground(new Color(0, 0, 0));
         instruccion.setForeground(new Color(0, 0, 0));
+        img.setIcon(null);
 
+        contador4=1;
     }
 }

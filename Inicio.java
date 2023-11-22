@@ -21,9 +21,9 @@ public class Inicio extends JFrame implements ActionListener{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Bienvenido");
         getContentPane().setBackground(new Color(255,255,255));
-        setIconImage(new ImageIcon("ivono.png").getImage());
+        setIconImage(new ImageIcon("images/ivono.png").getImage());
 
-        String rutaImagen = "logo.png";
+        String rutaImagen = "images/logo.png";
         label1 = new JLabel();
         redimensionarYEstablecerImagen(label1, rutaImagen, 120, 125);
         label1.setBounds(10,10,120,100);
@@ -70,12 +70,12 @@ public class Inicio extends JFrame implements ActionListener{
         boton1.addActionListener(this);
         add(boton1);
 
-        ImageIcon imagen = new ImageIcon("Fes.png");
+        ImageIcon imagen = new ImageIcon("images/Fes.png");
         label1 = new JLabel(imagen);
         label1.setBounds(380,15,340,100);
         add(label1);
 
-        String rutaFondo="nuevo3.jpg";
+        String rutaFondo="images/nuevo3.jpg";
         img = new JLabel();
         redimensionarYEstablecerImagen(img,rutaFondo,640,500);
         img.setBounds(0,0,640,500);
