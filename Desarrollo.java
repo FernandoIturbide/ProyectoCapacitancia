@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Desarrollo extends JFrame implements ActionListener, ChangeListener{
-    private JLabel label1,label3,instruccion,resultado,serie1, serie2,paralelo1, paralelo2;
+    private JLabel label1,label3,instruccion,resultado,serie1, serie2,paralelo1, paralelo2, img;
     private JRadioButton radio1,radio2,radio3,radio4;
     private JButton boton1,volver,agregar,eliminar, modificar;
     private int  contador=0,contador2=0,contador3=0, tipo=0;
@@ -116,7 +116,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         label1 = new JLabel("Seleccione el calculo que desea realizar");
         label1.setBounds(90,15,420,30);
         label1.setFont(new Font("Andale Mono", 1, 21));
-        label1.setForeground(new Color(0, 0, 0));
+        label1.setForeground(new Color(255, 255, 255));
         add(label1);
 
         radio1 = new JRadioButton("Capacitancia equivalente");
@@ -137,7 +137,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         label3 = new JLabel("¿En serie o en paralelo?");
         label3.setBounds(160,120,280,30);
         label3.setFont(new Font("Andale Mono", 1, 21));
-        label3.setForeground(new Color(0, 0, 0));
+        label3.setForeground(new Color(255, 255, 255));
         add(label3);
 
         radio3 = new JRadioButton("Serie");
@@ -191,6 +191,7 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         resultado=new JLabel("Equivalencia");
         resultado.setBounds(50,280,250,30);
         resultado.setFont(new Font("Andale Mono", 1, 15));
+        resultado.setForeground(new Color(0, 0, 0));
         resultado.setVisible(false);
         add(resultado);
 
@@ -241,6 +242,12 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         volver.addActionListener(this);
         volver.setVisible(false);
         add(volver);
+
+        String rutaFondo="nuevo4.jpg";
+        img = new JLabel();
+        redimensionarYEstablecerImagen(img,rutaFondo,640,500);
+        img.setBounds(0,0,640,500);
+        add(img);
     
     }
     public void stateChanged(ChangeEvent e) {
@@ -331,6 +338,8 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
                 else{
                     JOptionPane.showMessageDialog(null,"Por favor, marque las opciones","Error",JOptionPane.ERROR_MESSAGE);
                 }
+                String rutaFondo2="nuevo1.jpg";
+                redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
             }
         }
 
@@ -482,6 +491,9 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         lista = new double[contador2 + 1];
         valores=new int[contador2+1];
 
+        String rutaFondo2="nuevo4.jpg";
+        redimensionarYEstablecerImagen(img,rutaFondo2,600,540);
+
         serie1.setVisible(false);
         serie2.setVisible(false);
         paralelo1.setVisible(false);
@@ -598,13 +610,13 @@ public class Desarrollo extends JFrame implements ActionListener, ChangeListener
         instruccion.setForeground(new Color(0, 255, 0));
     }
     public void colorOriginal(){
-        label1.setForeground(new Color(0, 0, 0));
+        label1.setForeground(new Color(255, 255, 255));
         radio1.setBackground(new Color(238,238,238));
         radio2.setBackground(new Color(238,238,238));
         radio3.setBackground(new Color(238,238,238));
         radio4.setBackground(new Color(238,238,238));
         boton1.setBackground(new Color(238,238,238));
-        label3.setForeground(new Color(0, 0, 0));
+        label3.setForeground(new Color(255, 255, 255));
         resultado.setForeground(new Color(0, 0, 0));
         instruccion.setForeground(new Color(0, 0, 0));
 
